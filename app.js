@@ -60,9 +60,6 @@ function sync(cb) {
 }
 
 function finish_client() {
-	if (inputs.notice === false) {
-		client.part(inputs.channel);
-	}
 	client.part(inputs.channel);
 	client.quit();
 	process.exitCode = 0;
@@ -103,6 +100,7 @@ function handle_response() {
 client.on('registered', () => {
 	const messages = eol.split(inputs.message);
 	if (inputs.notice) {
+		client.join(inputs.channel, inputs.message);
 		for(let message of messages)
 			client.notice(inputs.channel, message);
 	} else {
